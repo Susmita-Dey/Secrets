@@ -16,10 +16,10 @@ const passportLocalMongoose = require("passport-local-mongoose");
 
 const app = express();
 mongoose.connect("mongodb://localhost:27017/userDB", { useNewUrlParser: true })
-  .then(() => {
+  .then(()=>{
     console.log("connected to DB");
   })
-  .catch(err => {
+  .catch(err=>{
     console.log("error:", err.message);
   })
 
@@ -97,10 +97,10 @@ app.get("/secrets", function (req, res) {
 // });
 
 // Much better with async and await.
-app.post("/register", async function (req, res) {
+app.post("/register", async function (req, res){
   try {
     const { username, password } = req.body;
-
+  
     const user = new User({
       username,
       password
@@ -111,13 +111,13 @@ app.post("/register", async function (req, res) {
     * helper function provided by passport.
     */
     req.login(registeredUser, err => {
-      if (err) {
-        console.log(err);
-        return res.redirect("/register");
-      };
-      res.redirect("/secrets");
+        if (err) {
+          console.log(err);
+          return res.redirect("/register");
+        };
+        res.redirect("/secrets");
     })
-  } catch (err) {
+  } catch (err){
     console.log(err);
     res.redirect("/register");
   }
